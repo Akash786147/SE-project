@@ -1,82 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Portal</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body class="bg-gray-100 font-inter">
-  <div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <div id="sidebar" class="w-[240px] h-screen bg-purple fixed left-0 top-0 rounded-tr-[24px] rounded-br-[24px] overflow-hidden shadow-xl z-10">
-      <div class="p-6">
-        <div class="flex items-center justify-center mb-12">
-          <img src="assets/logo.png" alt="BMU Logo" class="h-16">
-        </div>
-        
-        <nav class="space-y-6">
-          <a href="index.html" class="flex items-center gap-3 text-white/90 hover:text-white py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-white/5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            <span class="text-lg">Home</span>
-          </a>
-          <a href="timetable.html" class="flex items-center gap-3 text-white py-2 px-4 rounded-lg transition-all duration-200 ease-in-out bg-white/10 font-medium">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span class="text-lg">TimeTable</span>
-          </a>
-          <a href="messages.html" class="flex items-center gap-3 text-white/90 hover:text-white py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-white/5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            <span class="text-lg">Messages</span>
-          </a>
-          <a href="result.html" class="flex items-center gap-3 text-white/90 hover:text-white py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-white/5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
-            <span class="text-lg">Result</span>
-          </a>
-          <a href="courses.html" class="flex items-center gap-3 text-white/90 hover:text-white py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-white/5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-            <span class="text-lg">Courses</span>
-          </a>
-          <a href="attendance.html" class="flex items-center gap-3 text-white/90 hover:text-white py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-white/5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            <span class="text-lg">Attendance</span>
-          </a>
-        </nav>
-      </div>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="ml-[240px] flex-1 flex flex-col p-6">
-      <!-- Top Bar -->
-      <div class="flex items-center justify-between">
-        <h1 class="text-4xl font-medium text-purple/90 slide-up">Home</h1>
-        
-        <div class="flex items-center ml-auto gap-4">
-          <button 
-            class="p-3 rounded-full hover:bg-gray-100 transition-colors"
-            onclick="console.log('Notifications')"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-700"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-          </button>
-          <button 
-            class="p-3 rounded-full hover:bg-gray-100 transition-colors"
-            onclick="console.log('Messages')"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-700"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </button>
-        </div>
-      </div>
-      
-      <!-- Content area - will be loaded dynamically -->
-      <main class="mt-6 flex-1" id="main-content">
-        <!-- Content loaded via JavaScript -->
-      </main>
-    </div>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>layout-to-live</title>
+    <meta name="description" content="Lovable Generated Project" />
+    <meta name="author" content="Lovable" />
+    <meta property="og:image" content="/og-image.png" />
+  </head>
 
-  <script src="js/app.js"></script>
-</body>
+  <body>
+    <div id="root"></div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

@@ -1,3 +1,0 @@
-
-This folder will contain images and other assets for the website.
-The logo.png file should be placed here.
