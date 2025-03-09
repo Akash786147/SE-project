@@ -5,11 +5,12 @@ import SemesterTabs from '@/components/SemesterTabs';
 import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { toast } from '@/components/ui/use-toast';
 
 const CourseRegistration: FC = () => {
   const [activeSemester, setActiveSemester] = useState(1);
   
-  const registrationData = [
+  const [registrationData, setRegistrationData] = useState([
     {
       unit: '03',
       subject: 'COA',
@@ -50,7 +51,7 @@ const CourseRegistration: FC = () => {
       status: 'Late Submission',
       selected: true,
     },
-  ];
+  ]);
   
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -61,6 +62,27 @@ const CourseRegistration: FC = () => {
       default:
         return 'text-black';
     }
+  };
+  
+  const toggleSelect = (index: number) => {
+    const newData = [...registrationData];
+    newData[index].selected = !newData[index].selected;
+    setRegistrationData(newData);
+    
+    toast({
+      title: newData[index].selected 
+        ? `Selected ${newData[index].subject}` 
+        : `Deselected ${newData[index].subject}`,
+      duration: 2000,
+    });
+  };
+  
+  const handleNext = () => {
+    toast({
+      title: "Course registration in progress",
+      description: "Your selected courses are being registered",
+      duration: 3000,
+    });
   };
   
   return (
@@ -82,14 +104,16 @@ const CourseRegistration: FC = () => {
             className="grid grid-cols-5 py-5 hover:bg-gray-50 transition-colors border-b last:border-b-0"
           >
             <div className="px-6 flex items-center">
-              <div 
+              <button
+                onClick={() => toggleSelect(index)}
                 className={cn(
                   "w-5 h-5 rounded-sm border flex items-center justify-center mr-3",
                   registration.selected ? "bg-green-600 border-green-600" : "border-gray-300"
                 )}
+                aria-label={registration.selected ? "Deselect" : "Select"}
               >
                 {registration.selected && <Check className="h-3 w-3 text-white" />}
-              </div>
+              </button>
               {registration.unit}
             </div>
             <div className="px-6 text-gray-800 font-medium">{registration.subject}</div>
@@ -103,7 +127,10 @@ const CourseRegistration: FC = () => {
       </div>
       
       <div className="flex justify-end mt-4">
-        <Button className="bg-white hover:bg-gray-50 text-gray-800 border border-gray-200">
+        <Button 
+          onClick={handleNext}
+          className="bg-white hover:bg-gray-50 text-gray-800 border border-gray-200"
+        >
           Next
         </Button>
       </div>

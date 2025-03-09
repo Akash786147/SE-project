@@ -5,13 +5,14 @@ import { cn } from '@/lib/utils';
 interface SemesterTabsProps {
   activeSemester: number;
   onChange: (semester: number) => void;
+  className?: string;
 }
 
-const SemesterTabs: FC<SemesterTabsProps> = ({ activeSemester, onChange }) => {
+const SemesterTabs: FC<SemesterTabsProps> = ({ activeSemester, onChange, className }) => {
   const semesters = [1, 2, 3, 4];
   
   return (
-    <div className="flex rounded-full bg-purple/20 p-2 w-full mb-8 fade-in">
+    <div className={cn("flex rounded-full bg-purple-200/40 p-2 w-full mb-8 fade-in", className)}>
       {semesters.map((semester) => (
         <button
           key={semester}

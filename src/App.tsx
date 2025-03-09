@@ -13,6 +13,7 @@ import Messages from "./pages/Messages";
 import Result from "./pages/Result";
 import Courses from "./pages/Courses";
 import CourseRegistration from "./pages/CourseRegistration";
+import GroupEvaluation from "./pages/GroupEvaluation";
 import Attendance from "./pages/Attendance";
 import NotFound from "./pages/NotFound";
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/result" element={<Result />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/course-registration" element={<CourseRegistration />} />
+          <Route path="/group-evaluation" element={<GroupEvaluation />} />
           <Route path="/attendance" element={<Attendance />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -13,9 +13,9 @@ const PageLayout: FC<PageLayoutProps> = ({ children, title }) => {
     <div className="flex min-h-screen bg-background">
       <Sidebar />
       
-      <div className="ml-[240px] flex-1 p-6">
+      <div className="ml-[240px] flex-1 flex flex-col p-6">
         <TopBar title={title} />
-        <main className="mt-6">
+        <main className="mt-6 flex-1">
           {children}
         </main>
       </div>

@@ -3,9 +3,11 @@ import { FC, useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 import SemesterTabs from '@/components/SemesterTabs';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const Courses: FC = () => {
   const [activeSemester, setActiveSemester] = useState(1);
+  const navigate = useNavigate();
   
   const courseData = [
     {
@@ -45,6 +47,10 @@ const Courses: FC = () => {
     },
   ];
   
+  const goToCourseRegistration = () => {
+    navigate('/course-registration');
+  };
+  
   return (
     <PageLayout title="Courses">
       <SemesterTabs activeSemester={activeSemester} onChange={setActiveSemester} />
@@ -72,7 +78,13 @@ const Courses: FC = () => {
         ))}
       </div>
       
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-end mt-4 space-x-4">
+        <Button 
+          onClick={goToCourseRegistration}
+          className="bg-purple hover:bg-purple/90 text-white"
+        >
+          Course Registration
+        </Button>
         <Button className="bg-white hover:bg-gray-50 text-gray-800 border border-gray-200">
           Next
         </Button>
