@@ -1,5 +1,5 @@
 
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import PageLayout from '@/components/PageLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,13 +7,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Search, Send } from 'lucide-react';
 
 const Messages: FC = () => {
-  const [activeChat, setActiveChat] = useState('Mr. Gautam Gupta');
+  const [activeChat, setActiveChat] = useState('');
   
   const contacts = [
     {
       name: 'Mr. Gautam Gupta',
       role: 'MAD Professor',
-      avatar: '/public/lovable-uploads/c4ec9c9a-66d9-480b-b586-345ceb182b6f.png',
+      avatar: '/lovable-uploads/c4ec9c9a-66d9-480b-b586-345ceb182b6f.png',
       online: true,
       lastMessage: 'Please submit your assignment by tomorrow.',
       time: '5m ago',
@@ -22,7 +22,7 @@ const Messages: FC = () => {
     {
       name: 'Dr. Nishtha Phutela',
       role: 'SE Professor',
-      avatar: '/public/lovable-uploads/de81a2e4-513b-4ec7-a75b-a23cd02cef0f.png',
+      avatar: '/lovable-uploads/de81a2e4-513b-4ec7-a75b-a23cd02cef0f.png',
       online: true,
       lastMessage: 'The class is rescheduled to 2 PM.',
       time: '1h ago',
@@ -31,7 +31,7 @@ const Messages: FC = () => {
     {
       name: 'Prof. Anantha Rao',
       role: 'ML Professor',
-      avatar: '/public/lovable-uploads/c4ec9c9a-66d9-480b-b586-345ceb182b6f.png',
+      avatar: '/lovable-uploads/c4ec9c9a-66d9-480b-b586-345ceb182b6f.png',
       online: false,
       lastMessage: 'Great work on the last project.',
       time: '1d ago',
@@ -40,7 +40,7 @@ const Messages: FC = () => {
     {
       name: 'Dr. Satyendr Singh',
       role: 'COA Professor',
-      avatar: '/public/lovable-uploads/de81a2e4-513b-4ec7-a75b-a23cd02cef0f.png',
+      avatar: '/lovable-uploads/de81a2e4-513b-4ec7-a75b-a23cd02cef0f.png',
       online: false,
       lastMessage: 'Please check the updated course material.',
       time: '2d ago',
@@ -48,52 +48,195 @@ const Messages: FC = () => {
     },
   ];
   
-  const messages = [
-    {
-      sender: 'Mr. Gautam Gupta',
-      text: 'Hello Akshit, I wanted to follow up on your MAD project progress.',
-      time: '10:30 AM',
-      received: true,
-    },
-    {
-      sender: 'You',
-      text: 'Hello sir, I\'ve completed the initial design and working on the implementation now.',
-      time: '10:35 AM',
-      received: false,
-    },
-    {
-      sender: 'Mr. Gautam Gupta',
-      text: 'That sounds good. Please make sure to implement all the required features we discussed in class.',
-      time: '10:40 AM',
-      received: true,
-    },
-    {
-      sender: 'Mr. Gautam Gupta',
-      text: 'Also, don\'t forget to submit your weekly report by tomorrow.',
-      time: '10:42 AM',
-      received: true,
-    },
-    {
-      sender: 'You',
-      text: 'Yes sir, I\'ll make sure to include all features. And I\'ll submit the report by tomorrow.',
-      time: '10:45 AM',
-      received: false,
-    },
-    {
-      sender: 'Mr. Gautam Gupta',
-      text: 'Great! If you have any questions or need assistance, feel free to message me.',
-      time: '10:50 AM',
-      received: true,
-    },
-    {
-      sender: 'Mr. Gautam Gupta',
-      text: 'Please submit your assignment by tomorrow.',
-      time: '11:00 AM',
-      received: true,
-    },
-  ];
+  // Different message conversations for each teacher
+  const conversationsMap = {
+    'Mr. Gautam Gupta': [
+      {
+        sender: 'Mr. Gautam Gupta',
+        text: 'Hello Akshit, I wanted to follow up on your MAD project progress.',
+        time: '10:30 AM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'Hello sir, I\'ve completed the initial design and working on the implementation now.',
+        time: '10:35 AM',
+        received: false,
+      },
+      {
+        sender: 'Mr. Gautam Gupta',
+        text: 'That sounds good. Please make sure to implement all the required features we discussed in class.',
+        time: '10:40 AM',
+        received: true,
+      },
+      {
+        sender: 'Mr. Gautam Gupta',
+        text: 'Also, don\'t forget to submit your weekly report by tomorrow.',
+        time: '10:42 AM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'Yes sir, I\'ll make sure to include all features. And I\'ll submit the report by tomorrow.',
+        time: '10:45 AM',
+        received: false,
+      },
+      {
+        sender: 'Mr. Gautam Gupta',
+        text: 'Great! If you have any questions or need assistance, feel free to message me.',
+        time: '10:50 AM',
+        received: true,
+      },
+      {
+        sender: 'Mr. Gautam Gupta',
+        text: 'Please submit your assignment by tomorrow.',
+        time: '11:00 AM',
+        received: true,
+      },
+    ],
+    'Dr. Nishtha Phutela': [
+      {
+        sender: 'Dr. Nishtha Phutela',
+        text: 'Good morning Akshit, I need to inform you about the Software Engineering class timing.',
+        time: '9:00 AM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'Good morning ma\'am. Is there any change?',
+        time: '9:05 AM',
+        received: false,
+      },
+      {
+        sender: 'Dr. Nishtha Phutela',
+        text: 'Yes, the class is rescheduled to 2 PM today due to a faculty meeting.',
+        time: '9:10 AM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'Thank you for letting me know. I\'ll be there at 2 PM.',
+        time: '9:15 AM',
+        received: false,
+      },
+      {
+        sender: 'Dr. Nishtha Phutela',
+        text: 'Also, please prepare for the presentation on agile methodologies.',
+        time: '9:20 AM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'I\'ve already started working on it. It will be ready by the class.',
+        time: '9:25 AM',
+        received: false,
+      },
+      {
+        sender: 'Dr. Nishtha Phutela',
+        text: 'The class is rescheduled to 2 PM.',
+        time: '9:30 AM',
+        received: true,
+      },
+    ],
+    'Prof. Anantha Rao': [
+      {
+        sender: 'Prof. Anantha Rao',
+        text: 'Hello Akshit, I wanted to discuss your Machine Learning project.',
+        time: '2:00 PM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'Hello Professor, I\'m available to discuss it. What aspects would you like to focus on?',
+        time: '2:05 PM',
+        received: false,
+      },
+      {
+        sender: 'Prof. Anantha Rao',
+        text: 'I was reviewing your implementation of the neural network model, and I\'m impressed with your approach.',
+        time: '2:10 PM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'Thank you, sir. I spent a lot of time optimizing the hyperparameters.',
+        time: '2:15 PM',
+        received: false,
+      },
+      {
+        sender: 'Prof. Anantha Rao',
+        text: 'It shows. Your model has achieved better accuracy than most of your peers. Great work on the last project.',
+        time: '2:20 PM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'I appreciate the feedback. I\'m planning to improve it further by implementing cross-validation.',
+        time: '2:25 PM',
+        received: false,
+      },
+      {
+        sender: 'Prof. Anantha Rao',
+        text: 'That\'s an excellent next step. Let me know if you need any assistance with that.',
+        time: '2:30 PM',
+        received: true,
+      },
+    ],
+    'Dr. Satyendr Singh': [
+      {
+        sender: 'Dr. Satyendr Singh',
+        text: 'Hello Akshit, I\'ve updated the Computer Architecture course materials.',
+        time: '4:00 PM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'Thank you for letting me know, sir. Where can I find the updated materials?',
+        time: '4:05 PM',
+        received: false,
+      },
+      {
+        sender: 'Dr. Satyendr Singh',
+        text: 'They\'re uploaded on the course portal. The new materials include detailed processor architecture diagrams.',
+        time: '4:10 PM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'I\'ll check them out right away. Are there any specific sections I should focus on for the upcoming test?',
+        time: '4:15 PM',
+        received: false,
+      },
+      {
+        sender: 'Dr. Satyendr Singh',
+        text: 'Focus on pipelining concepts and cache coherence protocols. These will be key areas in the mid-term.',
+        time: '4:20 PM',
+        received: true,
+      },
+      {
+        sender: 'You',
+        text: 'Understood, sir. I\'ll prioritize those sections in my preparation.',
+        time: '4:25 PM',
+        received: false,
+      },
+      {
+        sender: 'Dr. Satyendr Singh',
+        text: 'Please check the updated course material. Let me know if you have any questions.',
+        time: '4:30 PM',
+        received: true,
+      },
+    ],
+  };
+
+  // Set default active chat on component mount
+  useEffect(() => {
+    if (contacts.length > 0 && !activeChat) {
+      setActiveChat(contacts[0].name);
+    }
+  }, [contacts, activeChat]);
   
   const activeContact = contacts.find(contact => contact.name === activeChat);
+  const currentMessages = activeChat ? conversationsMap[activeChat as keyof typeof conversationsMap] || [] : [];
   
   return (
     <PageLayout title="Messages">
@@ -165,7 +308,7 @@ const Messages: FC = () => {
                 </div>
                 
                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                  {messages.map((message, index) => (
+                  {currentMessages.map((message, index) => (
                     <div 
                       key={index}
                       className={`flex ${message.received ? 'justify-start' : 'justify-end'}`}

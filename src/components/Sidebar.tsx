@@ -1,7 +1,7 @@
 
 import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Clock, MessageSquare, BarChart2, FolderOpen, Calendar } from 'lucide-react';
+import { Home, Clock, MessageSquare, BarChart2, FolderOpen, Calendar, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Sidebar: FC = () => {
@@ -18,6 +18,7 @@ const Sidebar: FC = () => {
     { icon: BarChart2, label: 'Result', path: '/result' },
     { icon: FolderOpen, label: 'Courses', path: '/courses' },
     { icon: Calendar, label: 'Attendance', path: '/attendance' },
+    { icon: Users, label: 'Group Evaluation', path: '/group-evaluation' },
   ];
 
   return (
