@@ -59,6 +59,7 @@ const Auth = () => {
         description: "Account created successfully! Please sign in.",
       });
     } catch (error) {
+      console.error("Signup error:", error);
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Failed to sign up",
