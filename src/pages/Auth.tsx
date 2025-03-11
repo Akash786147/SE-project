@@ -18,12 +18,17 @@ const Auth = () => {
     setIsLoading(true);
     try {
       const formData = new FormData(e.currentTarget);
-      await signInWithEmail(
-        formData.get('email') as string,
-        formData.get('password') as string
-      );
+      const email = formData.get('email') as string;
+      const password = formData.get('password') as string;
+      
+      if (!email || !password) {
+        throw new Error('Please fill in all fields');
+      }
+
+      await signInWithEmail(email, password);
       navigate('/');
     } catch (error) {
+      console.error('Sign in error:', error);
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Failed to sign in",
@@ -39,17 +44,26 @@ const Auth = () => {
     setIsLoading(true);
     try {
       const formData = new FormData(e.currentTarget);
+      const email = formData.get('email') as string;
+      const password = formData.get('password') as string;
+      const firstName = formData.get('firstName') as string;
+      const lastName = formData.get('lastName') as string;
       const role = formData.get('role') as UserRole;
+      const department = formData.get('department') as string;
       
+      if (!email || !password || !firstName || !lastName || !role || !department) {
+        throw new Error('Please fill in all required fields');
+      }
+
       await signUpWithEmail(
-        formData.get('email') as string,
-        formData.get('password') as string,
+        email,
+        password,
         {
-          first_name: formData.get('firstName') as string,
-          last_name: formData.get('lastName') as string,
+          first_name: firstName,
+          last_name: lastName,
           role,
           batch: role === 'student' ? formData.get('batch') as string : undefined,
-          department: formData.get('department') as string,
+          department,
           course: role === 'student' ? formData.get('course') as string : undefined,
         }
       );
