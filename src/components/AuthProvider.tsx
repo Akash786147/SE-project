@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { Profile } from '@/lib/auth';
@@ -6,11 +5,13 @@ import type { Profile } from '@/lib/auth';
 type AuthContextType = {
   user: Profile | null;
   isLoading: boolean;
+  setUserRole: (role: 'student' | 'faculty') => void;
 };
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isLoading: true,
+  setUserRole: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -36,7 +37,7 @@ const mockFacultyUser: Profile = {
 };
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  // Use student as default mock user
+  // Default to student user for now
   const [user, setUser] = useState<Profile | null>(mockStudentUser);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -46,19 +47,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Set mock user based on path
     // This is just to handle initial load
     if (location.pathname !== '/auth') {
-      setUser(mockStudentUser);
+      // Keep current user role if already set
+      if (!user) {
+        setUser(mockStudentUser);
+      }
     }
     setIsLoading(false);
-  }, [location.pathname]);
+  }, [location.pathname, user]);
 
-  // This function would be used to switch between student and faculty
-  // (not used in current implementation but kept for future)
+  // Function to switch between student and faculty
   const setUserRole = (role: 'student' | 'faculty') => {
     setUser(role === 'student' ? mockStudentUser : mockFacultyUser);
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading }}>
+    <AuthContext.Provider value={{ user, isLoading, setUserRole }}>
       {children}
     </AuthContext.Provider>
   );

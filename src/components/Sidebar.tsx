@@ -3,23 +3,44 @@ import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Clock, MessageSquare, BarChart2, FolderOpen, Calendar, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/components/AuthProvider';
 
 const Sidebar: FC = () => {
   const location = useLocation();
+  const { user } = useAuth();
   
   const isActive = (path: string) => {
     return location.pathname === path;
   };
 
-  const menuItems = [
-    { icon: Home, label: 'Home', path: '/' },
-    { icon: Clock, label: 'TimeTable', path: '/timetable' },
-    { icon: MessageSquare, label: 'Messages', path: '/messages' },
-    { icon: BarChart2, label: 'Result', path: '/result' },
-    { icon: FolderOpen, label: 'Courses', path: '/courses' },
-    { icon: Calendar, label: 'Attendance', path: '/attendance' },
-    { icon: Users, label: 'Group Evaluation', path: '/group-evaluation' },
-  ];
+  // Define menu items based on user role
+  const getMenuItems = () => {
+    const commonItems = [
+      { icon: Home, label: 'Home', path: '/' },
+      { icon: Clock, label: 'TimeTable', path: '/timetable' },
+      { icon: MessageSquare, label: 'Messages', path: '/messages' },
+      { icon: Calendar, label: 'Attendance', path: '/attendance' },
+    ];
+    
+    // Faculty-specific items
+    if (user?.role === 'faculty') {
+      return [
+        ...commonItems,
+        { icon: FolderOpen, label: 'Courses', path: '/courses' },
+        { icon: Users, label: 'Group Evaluation', path: '/group-evaluation' },
+      ];
+    }
+    
+    // Student-specific items
+    return [
+      ...commonItems,
+      { icon: BarChart2, label: 'Result', path: '/result' },
+      { icon: FolderOpen, label: 'Courses', path: '/courses' },
+      { icon: Users, label: 'Group Evaluation', path: '/group-evaluation' },
+    ];
+  };
+
+  const menuItems = getMenuItems();
 
   return (
     <div className="w-[240px] h-screen bg-sidebar fixed left-0 top-0 rounded-tr-[24px] rounded-br-[24px] overflow-hidden shadow-xl z-10">
