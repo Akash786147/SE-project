@@ -16,6 +16,40 @@ export type Profile = {
   profile_image?: string;
 };
 
+export type SignUpData = {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  batch?: string;
+  department?: string;
+  course?: string;
+};
+
+export const signUpWithEmail = async (signUpData: SignUpData) => {
+  const { email, password, firstName, lastName, role, batch, department, course } = signUpData;
+  
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        role,
+        batch,
+        department,
+        course
+      }
+    }
+  });
+  
+  if (error) throw error;
+  
+  return data;
+};
+
 export const signInWithEmail = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
