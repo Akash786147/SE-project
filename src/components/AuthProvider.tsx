@@ -1,7 +1,6 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import type { Profile } from '@/lib/auth';
 
 type AuthContextType = {
@@ -16,81 +15,47 @@ const AuthContext = createContext<AuthContextType>({
 
 export const useAuth = () => useContext(AuthContext);
 
+// Mock user data
+const mockStudentUser: Profile = {
+  id: 'student-123',
+  first_name: 'Student',
+  last_name: 'User',
+  email: 'student@example.com',
+  role: 'student',
+  batch: '2023-2027',
+  course: 'B.Tech',
+};
+
+const mockFacultyUser: Profile = {
+  id: 'faculty-123',
+  first_name: 'Faculty',
+  last_name: 'User',
+  email: 'faculty@example.com',
+  role: 'faculty',
+  department: 'Computer Science',
+};
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<Profile | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Use student as default mock user
+  const [user, setUser] = useState<Profile | null>(mockStudentUser);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { data: { user: authUser } } = await supabase.auth.getUser();
-        
-        if (authUser) {
-          const { data: profile, error } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', authUser.id)
-            .single();
-            
-          if (profile && !error) {
-            setUser(profile);
-            // If we're on the auth page and already logged in, redirect to home
-            if (location.pathname === '/auth') {
-              navigate('/');
-            }
-          } else if (error) {
-            console.error('Error fetching profile:', error);
-            await supabase.auth.signOut();
-            setUser(null);
-          }
-        }
-      } catch (error) {
-        console.error('Auth error:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    // Set mock user based on path
+    // This is just to handle initial load
+    if (location.pathname !== '/auth') {
+      setUser(mockStudentUser);
+    }
+    setIsLoading(false);
+  }, [location.pathname]);
 
-    fetchUser();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' && session?.user) {
-        try {
-          const { data: profile, error } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', session.user.id)
-            .single();
-            
-          if (profile && !error) {
-            setUser(profile);
-            navigate('/');
-          } else {
-            console.error('Profile not found or error:', error);
-          }
-        } catch (error) {
-          console.error('Error during auth state change:', error);
-        } finally {
-          setIsLoading(false);
-        }
-      } else if (event === 'SIGNED_OUT') {
-        setUser(null);
-        if (location.pathname !== '/auth') {
-          navigate('/auth');
-        }
-        setIsLoading(false);
-      } else if (event === 'USER_UPDATED') {
-        // Handle user update if needed
-        fetchUser();
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [navigate, location.pathname]);
+  // This function would be used to switch between student and faculty
+  // (not used in current implementation but kept for future)
+  const setUserRole = (role: 'student' | 'faculty') => {
+    setUser(role === 'student' ? mockStudentUser : mockFacultyUser);
+  };
 
   return (
     <AuthContext.Provider value={{ user, isLoading }}>

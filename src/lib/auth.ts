@@ -1,7 +1,4 @@
 
-import { supabase } from "@/integrations/supabase/client";
-import { type User } from "@supabase/supabase-js";
-
 export type UserRole = 'student' | 'faculty';
 
 export type Profile = {
@@ -27,60 +24,77 @@ export type SignUpData = {
   course?: string;
 };
 
+// Mock function - not actually using Supabase anymore
 export const signUpWithEmail = async (signUpData: SignUpData) => {
-  const { email, password, firstName, lastName, role, batch, department, course } = signUpData;
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 500));
   
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        first_name: firstName,
-        last_name: lastName,
-        role,
-        batch,
-        department,
-        course
+  return {
+    user: {
+      id: 'mock-user-id',
+      email: signUpData.email,
+      user_metadata: {
+        first_name: signUpData.firstName,
+        last_name: signUpData.lastName,
+        role: signUpData.role,
+        batch: signUpData.batch,
+        department: signUpData.department,
+        course: signUpData.course
       }
     }
-  });
-  
-  if (error) throw error;
-  
-  return data;
+  };
 };
 
+// Mock function - not actually using Supabase anymore
 export const signInWithEmail = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 500));
   
-  if (error) throw error;
-  
-  return data;
+  return {
+    user: {
+      id: 'mock-user-id',
+      email: email,
+      user_metadata: {
+        role: email.includes('faculty') ? 'faculty' : 'student'
+      }
+    }
+  };
 };
 
+// Mock function - not actually using Supabase anymore
 export const signOut = async () => {
-  const { error } = await supabase.auth.signOut();
-  if (error) throw error;
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 500));
 };
 
-export const getCurrentUser = async (): Promise<User | null> => {
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
+// Mock function - not actually using Supabase anymore
+export const getCurrentUser = async () => {
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 500));
+  
+  return {
+    id: 'mock-user-id',
+    email: 'user@example.com',
+    user_metadata: {
+      first_name: 'Mock',
+      last_name: 'User',
+      role: 'student'
+    }
+  };
 };
 
-export const getCurrentProfile = async (): Promise<Profile | null> => {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return null;
-
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single();
-
-  if (error) throw error;
-  return data;
+// Mock function - not actually using Supabase anymore
+export const getCurrentProfile = async (): Promise<Profile> => {
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 500));
+  
+  return {
+    id: 'mock-user-id',
+    first_name: 'Mock',
+    last_name: 'User',
+    email: 'user@example.com',
+    role: 'student',
+    batch: '2023-2027',
+    course: 'B.Tech'
+  };
 };

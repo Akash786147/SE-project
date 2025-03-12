@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { signInWithEmail, signUpWithEmail, type UserRole } from '@/lib/auth';
+import { type UserRole } from '@/lib/auth';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
@@ -35,27 +35,17 @@ const Auth = () => {
     setIsLoading(true);
     
     try {
+      // Since we're bypassing authentication, just check if there are values
       if (!loginEmail || !loginPassword) {
         throw new Error('Please fill in all required fields');
       }
 
-      const { user } = await signInWithEmail(loginEmail, loginPassword);
-      
-      // Get role from user metadata
-      const userRole = user?.user_metadata?.role;
-      
-      // Navigate based on role
-      if (userRole === 'student') {
-        navigate('/');
-      } else if (userRole === 'faculty') {
-        navigate('/');
-      } else {
-        navigate('/');
-      }
+      // Directly navigate to home page - simulating faculty login
+      navigate('/');
       
       toast({
         title: "Success",
-        description: "Signed in successfully!",
+        description: "Signed in as faculty!",
       });
     } catch (error) {
       console.error('Sign in error:', error);
@@ -89,33 +79,13 @@ const Auth = () => {
         throw new Error('Password must be at least 6 characters long');
       }
 
-      await signUpWithEmail({
-        email: signupEmail,
-        password: signupPassword,
-        firstName,
-        lastName,
-        role,
-        batch: batch || undefined,
-        department: department || undefined,
-        course: course || undefined,
-      });
+      // Directly navigate to home page - simulating student login
+      navigate('/');
       
       toast({
         title: "Success",
-        description: "Account created successfully! Please sign in.",
+        description: `Signed up as ${role}!`,
       });
-      
-      // Clear signup form
-      setSignupEmail('');
-      setSignupPassword('');
-      setConfirmPassword('');
-      setFirstName('');
-      setLastName('');
-      setRole('student');
-      setBatch('');
-      setDepartment('');
-      setCourse('');
-      
     } catch (error) {
       console.error('Sign up error:', error);
       toast({
@@ -179,7 +149,7 @@ const Auth = () => {
                   className="w-full bg-purple-700 hover:bg-purple-800"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Signing in..." : "Sign in"}
+                  {isLoading ? "Signing in..." : "Sign in as Faculty"}
                 </Button>
               </form>
             </TabsContent>
@@ -306,7 +276,7 @@ const Auth = () => {
                   className="w-full bg-purple-700 hover:bg-purple-800"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Creating Account..." : "Create Account"}
+                  {isLoading ? "Creating Account..." : "Sign up as Student"}
                 </Button>
               </form>
             </TabsContent>
