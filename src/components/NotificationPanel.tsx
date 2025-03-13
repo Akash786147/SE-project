@@ -21,37 +21,37 @@ const NotificationPanel: FC<NotificationPanelProps> = ({ isOpen, onClose }) => {
   const notifications: Notification[] = [
     {
       id: '1',
-      message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      message: 'Hey There Akshit, I had a problem',
       time: '10hrs ago',
-      avatar: '/lovable-uploads/f400707f-441c-472a-8a62-aed944c55c20.png',
+      avatar: '/uploads/f400707f-441c-472a-8a62-aed944c55c20.png',
       read: false
     },
     {
       id: '2',
-      message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      message: 'Please Complete ',
       time: '11hrs ago',
-      avatar: '/lovable-uploads/2cb4a5e1-2ec7-4be6-8a31-482ab1066973.png',
+      avatar: '/uploads/2cb4a5e1-2ec7-4be6-8a31-482ab1066973.png',
       read: false
     },
     {
       id: '3',
       message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       time: '1day ago',
-      avatar: '/lovable-uploads/f400707f-441c-472a-8a62-aed944c55c20.png',
+      avatar: '/uploads/f400707f-441c-472a-8a62-aed944c55c20.png',
       read: true
     },
     {
       id: '4',
       message: 'DSA Mid 11/2/25',
       time: '10hrs ago',
-      avatar: '/lovable-uploads/2cb4a5e1-2ec7-4be6-8a31-482ab1066973.png',
+      avatar: '/uploads/2cb4a5e1-2ec7-4be6-8a31-482ab1066973.png',
       read: false
     },
     {
       id: '5',
       message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       time: '1day ago',
-      avatar: '/lovable-uploads/f400707f-441c-472a-8a62-aed944c55c20.png',
+      avatar: '/uploads/f400707f-441c-472a-8a62-aed944c55c20.png',
       read: true
     }
   ];

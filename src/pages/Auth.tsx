@@ -102,7 +102,7 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <img src="/lovable-uploads/1817417c-eedd-4fb3-96af-36a69fce8b3e.png" alt="BMU Logo" className="mx-auto h-20" />
+          <img src="/uploads/image.png" alt="BMU Logo" className="mx-auto h-20" />
           <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
             Welcome to BMU Portal
           </h2>

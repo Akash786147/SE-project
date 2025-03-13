@@ -13,7 +13,7 @@ const Home: FC = () => {
     name: 'Akshit Wadhwa',
     course: 'BTech. Computer Science',
     batch: 'CSE 6',
-    profileImage: '/public/lovable-uploads/2cb4a5e1-2ec7-4be6-8a31-482ab1066973.png'
+    profileImage: '/public/uploads/yash-gupta.png'
   };
   
   const scheduleItems = [

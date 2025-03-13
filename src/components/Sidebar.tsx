@@ -46,7 +46,7 @@ const Sidebar: FC = () => {
     <div className="w-[240px] h-screen bg-sidebar fixed left-0 top-0 rounded-tr-[24px] rounded-br-[24px] overflow-hidden shadow-xl z-10">
       <div className="p-6">
         <div className="flex items-center justify-center mb-12">
-          <img src="/lovable-uploads/1817417c-eedd-4fb3-96af-36a69fce8b3e.png" alt="BMU Logo" className="h-16" />
+          <img src="/uploads/image.png" alt="BMU Logo" className="h-16" />
         </div>
         
         <nav className="space-y-6">

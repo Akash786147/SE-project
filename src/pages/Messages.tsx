@@ -13,7 +13,7 @@ const Messages: FC = () => {
     {
       name: 'Mr. Gautam Gupta',
       role: 'MAD Professor',
-      avatar: '/lovable-uploads/c4ec9c9a-66d9-480b-b586-345ceb182b6f.png',
+      avatar: '/uploads/c4ec9c9a-66d9-480b-b586-345ceb182b6f.png',
       online: true,
       lastMessage: 'Please submit your assignment by tomorrow.',
       time: '5m ago',
@@ -22,7 +22,7 @@ const Messages: FC = () => {
     {
       name: 'Dr. Nishtha Phutela',
       role: 'SE Professor',
-      avatar: '/lovable-uploads/de81a2e4-513b-4ec7-a75b-a23cd02cef0f.png',
+      avatar: '/uploads/de81a2e4-513b-4ec7-a75b-a23cd02cef0f.png',
       online: true,
       lastMessage: 'The class is rescheduled to 2 PM.',
       time: '1h ago',
@@ -31,7 +31,7 @@ const Messages: FC = () => {
     {
       name: 'Prof. Anantha Rao',
       role: 'ML Professor',
-      avatar: '/lovable-uploads/c4ec9c9a-66d9-480b-b586-345ceb182b6f.png',
+      avatar: '/uploads/c4ec9c9a-66d9-480b-b586-345ceb182b6f.png',
       online: false,
       lastMessage: 'Great work on the last project.',
       time: '1d ago',
@@ -40,7 +40,7 @@ const Messages: FC = () => {
     {
       name: 'Dr. Satyendr Singh',
       role: 'COA Professor',
-      avatar: '/lovable-uploads/de81a2e4-513b-4ec7-a75b-a23cd02cef0f.png',
+      avatar: '/uploads/de81a2e4-513b-4ec7-a75b-a23cd02cef0f.png',
       online: false,
       lastMessage: 'Please check the updated course material.',
       time: '2d ago',
